@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9b574124-685f-4a88-9a86-adeec05585a4" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="c4a9a0c1-297d-4c4b-ae9e-920ff90e1d1f" />
+	<file:config name="File_Config1" doc:name="File Config" doc:id="e96f7811-8e1c-4a54-81f1-194c56b1baae" />
+	<flow name="fileconnectorsFlow" doc:id="f4ac37db-dc06-4985-9dfc-4e13f8ecc46c" >
+		<http:listener doc:name="Listener" doc:id="a7ddefc4-8ef6-4bcc-a2f5-3b57ff1c838a" config-ref="HTTP_Listener_config" path="/file"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d3c8456f-f3a7-4af5-b83e-63c139a7b772" message="#[payload]"/>
+		<file:read doc:name="Read" doc:id="6738345f-93f7-4d78-868d-525a818d6bcd" config-ref="File_Config" path='C:\Inbound\Haritha.txt'/>
+		<file:write doc:name="Write" doc:id="bee5b2ed-bd74-4b04-b0c0-b31c18b6d65b" config-ref="File_Config1" path='C:\Inbound\James'>
+			<file:content ><![CDATA[#["welcome to James files"]]]></file:content>
+		</file:write>
+	</flow>
+</mule>
